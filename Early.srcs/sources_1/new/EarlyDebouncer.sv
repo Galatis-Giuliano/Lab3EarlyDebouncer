@@ -33,7 +33,6 @@ module EarlyDebouncer(
             S0:
             begin
                 enable = 1'b0;
-                //edb = 1'b0;
                 if(bu)
                 begin
                     edb = 1'b1;
@@ -52,12 +51,9 @@ module EarlyDebouncer(
                     end
                     else
                         state_next = S2;
-                else
-                    edb = 1'b1;             //Can Likely remove this without consequences
             S2:
             begin
                 enable = 1'b0;
-                //edb = 1'b1;
                 if(~bu)
                 begin
                     edb = 1'b0;
@@ -76,8 +72,6 @@ module EarlyDebouncer(
                     end
                     else
                         state_next = S0;
-                else
-                    edb = 1'b0;
             OFF:
                 begin
                     state_next = S0;

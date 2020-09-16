@@ -13,11 +13,11 @@ module TickTop(
     
     EarlyDebouncer debouncer(.clk(clk), .reset(reset), .bu(bu), .edb(edb));
     
-    EdgeDetector edgeDetectorButton(.clk(clk), .reset(reset), .bu(bu), .edgeOut(edgeDetected));
+    EdgeDetector edgeDetectorButton(.clk(clk), .reset(reset), .bu(bu), .edgeOut(edgeDetectedTick));
     EdgeDetector edgeDetectorDebounce(.clk(clk), .reset(reset), .bu(edb), .edgeOut(edbTick));
     
-    BinaryCounter #(.N(7)) debounceCount(.clk(clk), .reset(reset), .enable(edbTick), .maxValue(7'b1100011), .q(debounceCounter), .maxTick());
-    BinaryCounter #(.N(7)) edgeDetectCount(.clk(clk), .reset(reset), .enable(edgeDetected), .maxValue(7'b1100011), .q(edgeDetectCounter), .maxTick());
+    BinaryCounter #(.N(8)) debounceCount(.clk(clk), .reset(reset), .enable(edbTick), .q(debounceCounter), .maxTick());
+    BinaryCounter #(.N(8)) edgeDetectCount(.clk(clk), .reset(reset), .enable(edgeDetectedTick), .q(edgeDetectCounter), .maxTick());
     
     time_mux_disp sevenSegmentDisplay(
         .in0({1'b1 ,edgeDetectCounter[3:0], 1'b1}),
